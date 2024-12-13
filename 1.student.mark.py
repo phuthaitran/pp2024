@@ -61,23 +61,23 @@ while True:
     print("6. Show student marks for a course")
     print("7. Exit")
 
-    choice = int(input("Enter your choice: "))
-    if choice == 1:
+    choice = input("Enter your choice: ")
+    if choice == '1':
         show_students(students)
-    elif choice == 2:
+    elif choice == '2':
         show_courses(courses)
-    elif choice == 3:
+    elif choice == '3':
         num_students = input_number_of_students()
         for _ in range(num_students):
             student_info = input_student_info()
             students.append(student_info)
-    elif choice == 4:
+    elif choice == '4':
         num_courses = input_number_of_courses()
         for _ in range(num_courses):
             course_info = input_course_info()
             courses.append(course_info)
             marks[course_info[0]] = {}
-    elif choice == 5:
+    elif choice == '5':
         if not students:
             print("Student list is empty. Cannot enter the marks.")
         elif not courses:
@@ -91,7 +91,7 @@ while True:
                 marks[course_id] = input_marks_for_course(course_students)
             else:
                 print("Invalid course ID")
-    elif choice == 6:
+    elif choice == '6':
         if not students:
             print("Student list is empty. Cannot view the marks.")
         elif not courses:
@@ -104,7 +104,7 @@ while True:
                 show_marks_in_course(students, marks, course_id)
             else:
                 print("Invalid course ID")
-    elif choice == 7:
+    elif choice == '7':
         break
     else:
         print("Invalid choice. Please enter a valid option.")
