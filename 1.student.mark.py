@@ -23,13 +23,20 @@ def input_marks_for_course(students):
     return marks
 
 def show_courses(courses):
-    for course in courses:
-        print(f"ID: {course[0]}, Name: {course[1]}")
-
+    if not courses:
+        print("Course list is empty!")
+    else:
+        print("List of courses:")
+        for course in courses:
+            print(f"ID: {course[0]}, Name: {course[1]}")
+        
 def show_students(students):
-    print("List of students:")
-    for student in students:
-        print(f"ID: {student[0]}, Name: {student[1]}, DOB: {student[2]}")
+    if not students:
+        print("Student list is empty!")
+    else:
+        print("List of students:")
+        for student in students:
+            print(f"ID: {student[0]}, Name: {student[1]}, DOB: {student[2]}")
 
 def show_marks_in_course(students, marks, course_id):
     print(f"Student marks for course ID {course_id}:")
@@ -39,66 +46,64 @@ def show_marks_in_course(students, marks, course_id):
         else:
             print(f"ID: {student[0]}, Name: {student[1]}, DOB: {student[2]}, Mark: Not available")
 
+
 students = []
 courses = []
 marks = {}
 
-num_students = input_number_of_students()
-for _ in range(num_students):
-    student_info = input_student_info()
-    students.append(student_info)
-
-num_courses = input_number_of_courses()
-for _ in range(num_courses):
-    course_info = input_course_info()
-    courses.append(course_info)
-    marks[course_info[0]] = {}  
-
 while True:
     print("\nMenu:")
-    print("1. Add students")
-    print("2. Add courses")
-    print("3. List students")
-    print("4. List courses")
+    print("1. List students")
+    print("2. List courses")
+    print("3. Add students")
+    print("4. Add courses")
     print("5. Select a course and input marks for students")
     print("6. Show student marks for a course")
     print("7. Exit")
 
     choice = int(input("Enter your choice: "))
     if choice == 1:
+        show_students(students)
+    elif choice == 2:
+        show_courses(courses)
+    elif choice == 3:
         num_students = input_number_of_students()
         for _ in range(num_students):
             student_info = input_student_info()
             students.append(student_info)
-    elif choice == 2:
+    elif choice == 4:
         num_courses = input_number_of_courses()
         for _ in range(num_courses):
             course_info = input_course_info()
             courses.append(course_info)
             marks[course_info[0]] = {}
-    elif choice == 3:
-        show_students(students)
-    elif choice == 4:
-        print("List of courses:")
-        show_courses(courses)
     elif choice == 5:
-        print("List of courses to choose from:")
-        show_courses(courses)
-        course_id = input("Enter course ID to enter marks: ")
-        if course_id in marks:
-            print(f"Entering marks for course {course_id}:")
-            course_students = [student for student in students]
-            marks[course_id] = input_marks_for_course(course_students)
+        if not students:
+            print("Student list is empty. Cannot enter the marks.")
+        elif not courses:
+            print("There is no courses to choose from!")
         else:
-            print("Invalid course ID")
+            show_courses(courses)
+            course_id = input("Enter course ID to enter marks: ")
+            if course_id in marks:
+                print(f"Entering marks for course {course_id}:")
+                course_students = [student for student in students]
+                marks[course_id] = input_marks_for_course(course_students)
+            else:
+                print("Invalid course ID")
     elif choice == 6:
-        print("List of courses to choose from:")
-        show_courses(courses)
-        course_id = input("Enter course ID to show marks: ")
-        if course_id in marks:
-            show_marks_in_course(students, marks, course_id)
+        if not students:
+            print("Student list is empty. Cannot view the marks.")
+        elif not courses:
+            print("There is no courses to choose from!")
         else:
-            print("Invalid course ID")
+            print("List of courses to choose from:")
+            show_courses(courses)
+            course_id = input("Enter course ID to show marks: ")
+            if course_id in marks:
+                show_marks_in_course(students, marks, course_id)
+            else:
+                print("Invalid course ID")
     elif choice == 7:
         break
     else:
